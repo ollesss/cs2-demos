@@ -173,18 +173,21 @@ function displayMatches(matches) {
     const matchItem = document.createElement('div');
     matchItem.className = 'match-item';
     matchItem.innerHTML = `
-      <div class="match-header">
-        <div>
-          <div class="match-map">${match.map}</div>
-          <div class="match-date">${match.date}</div>
-        </div>
-        <div class="match-duration">${match.duration}</div>
-      </div>
-      <div class="match-controls">
-        <input type="checkbox" class="match-checkbox" data-url="${match.demoUrl}" checked>
-        <button class="download-btn " data-url="${match.demoUrl}">Скачать</button>
-      </div>
-    `;
+  <div class="match-header">
+    <div>
+      <div class="match-map">${match.map}</div>
+      <div class="match-date">${match.date}</div>
+    </div>
+    <div class="match-duration">${match.duration}</div>
+  </div>
+  <div class="match-controls">
+    <input type="checkbox" class="match-checkbox" data-url="${match.demoUrl}" checked>
+    <button class="download-btn" data-url="${match.demoUrl}">
+  <span class="btn-text">Скачать</span>
+  <div class="loader"></div>
+</button>
+  </div>
+`;
     matchesList.appendChild(matchItem);
   });
   
@@ -264,15 +267,17 @@ function downloadDemo(url, callback) {
   const matchItem = document.querySelector(`.match-checkbox[data-url="${url}"]`)?.closest('.match-item');
   const map = matchItem?.querySelector('.match-map')?.textContent || 'unknown';
   const date = matchItem?.querySelector('.match-date')?.textContent || 'unknown';
+  const filename = `CS2_${map.replace(/[\\/:*?"<>|]/g, '_')}_${new Date(date).toISOString().split('T')[0]}.dem.bz2`;
 
-  // Генерация безопасного имени файла
-  const safeMap = map.replace(/[\\/:*?"<>|]/g, '_').toLowerCase();
-  const safeDate = new Date(date).toISOString().split('T')[0]; // YYYY-MM-DD
-  const filename = `CS2_${safeMap}_${safeDate}.dem.bz2`;
+  // Находим кнопку загрузки для этого файла
+  const downloadBtn = document.querySelector(`.download-btn[data-url="${url}"]`);
+  
+  // Показываем лоадер на кнопке
+  if (downloadBtn) {
+    downloadBtn.classList.add('btn-loading');
+    downloadBtn.disabled = true;
+  }
 
-  console.log('⬇️ Отправка запроса на скачивание с именем:', filename);
-
-  // Отправка в background.js
   chrome.runtime.sendMessage(
     {
       action: 'download_demo',
@@ -280,13 +285,20 @@ function downloadDemo(url, callback) {
       filename: filename
     },
     (response) => {
+      // Убираем лоадер в любом случае
+      if (downloadBtn) {
+        downloadBtn.classList.remove('btn-loading');
+        downloadBtn.disabled = false;
+      }
+
       if (response?.success) {
         showNotification(`Скачано: ${filename}`, 'success');
-        if (callback) callback(true); // Успешное скачивание
+        if (callback) callback(true);
       } else {
-        showNotification(`Ошибка: ${response?.error || 'Неизвестная ошибка'}`, 'error');
+        const error = response?.error || 'Неизвестная ошибка';
+        showNotification(`Ошибка: ${error}`, 'error');
         window.open(url, '_blank');
-        if (callback) callback(false); // Ошибка скачивания
+        if (callback) callback(false);
       }
     }
   );

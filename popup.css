@@ -220,7 +220,9 @@ input[type="date"] {
   cursor: pointer;
 }
 
+/* Обновленные стили для кнопки скачивания */
 .download-btn {
+  position: relative;
   background-color: #5c7e10;
   color: white;
   border: none;
@@ -228,11 +230,61 @@ input[type="date"] {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 12px;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  min-width: 70px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Важно: обрезаем все что выходит за границы */
 }
 
 .download-btn:hover {
   background-color: #6e9423;
+}
+
+/* Текст кнопки */
+.download-btn .btn-text {
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+/* Лоадер - изначально скрыт */
+.download-btn .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px; /* Центрируем точно по середине */
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* Состояние загрузки */
+.download-btn.btn-loading .btn-text {
+  visibility: hidden; /* Полностью скрываем текст */
+  opacity: 0;
+  transform: scale(0.8); /* Дополнительный эффект исчезновения */
+}
+
+.download-btn.btn-loading .loader {
+  opacity: 1;
+  visibility: visible;
+}
+
+.download-btn.btn-loading {
+  pointer-events: none;
+  background-color: #4a6a0d;
+}
+
+/* Анимация вращения */
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .empty-message {
