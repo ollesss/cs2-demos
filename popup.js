@@ -250,7 +250,7 @@ function downloadSelected() {
     downloadDemo(urls[index], (success) => {
       downloadedCount += success ? 1 : 0;
       // Добавляем небольшую задержку между скачиваниями
-      setTimeout(() => downloadNext(index + 1), 500);
+      setTimeout(() => downloadNext(index + 1), 5000);
     });
   };
   
