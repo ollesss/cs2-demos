@@ -18,7 +18,7 @@ app.get('/proxy', async (req, res) => {
     const response = await fetch(url);
     if (!response.ok) return res.status(response.status).send('Upstream error');
 
-    res.setHeader('Content-Disposition', `attachment; filename="${sanitize(filename)}"`);
+    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${sanitize(filename)}`);
     res.setHeader('Content-Type', 'application/octet-stream');
     response.body.pipe(res);
   } catch (err) {
