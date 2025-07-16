@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'download_demo') {
-    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-    const proxiedUrl = corsProxy + encodeURIComponent(request.url);
+    const corsProxy = 'https://cs2-demos.onrender.com/proxy?url=';
+    const proxiedUrl = corsProxy + request.url;
 
     fetch(proxiedUrl, {
       method: 'GET',
