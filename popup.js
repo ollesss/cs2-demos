@@ -182,10 +182,11 @@ function displayMatches(matches) {
   </div>
   <div class="match-controls">
     <input type="checkbox" class="match-checkbox" data-url="${match.demoUrl}" checked>
+    
     <button class="download-btn" data-url="${match.demoUrl}">
-  <span class="btn-text">Скачать</span>
-  <div class="loader"></div>
-</button>
+      <span class="btn-text">Скачать</span>
+      <div class="loader"></div>
+    </button>
   </div>
 `;
     matchesList.appendChild(matchItem);
