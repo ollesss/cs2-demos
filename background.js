@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'download_demo') {
     const proxyBase = 'https://cs2-demos.onrender.com/proxy';
-    const proxiedUrl = `${proxyBase}?url=${encodeURIComponent(request.url)}&filename=${request.filename}`;
+    const proxiedUrl = `${proxyBase}?url=${encodeURIComponent(request.url)}&filename=${encodeURIComponent(request.filename)}`;
 
     chrome.downloads.download({
       url: proxiedUrl,
