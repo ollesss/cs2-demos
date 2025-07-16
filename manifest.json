@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "CS2 Demo Downloader",
+  "version": "1.0",
+  "description": "Скачивание демо-файлов матчей CS2 из Steam",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "downloads.open",
+    "storage",
+    "webRequest",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.valve.net/*",
+    "*://steamcommunity.com/*",
+    "https://cors-anywhere.herokuapp.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://steamcommunity.com/*matchhistory*"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {
+    "48": "icons/icon.png"
+  }
+}

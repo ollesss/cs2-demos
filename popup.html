@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Demo Downloader</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>CS2 Demo Downloader</h1>
+    
+    <div class="date-range">
+      <h3>Выберите временной диапазон</h3>
+      <div class="date-inputs">
+        <div>
+          <label for="start-date">Начальная дата:</label>
+          <input type="date" id="start-date">
+        </div>
+        <div>
+          <label for="end-date">Конечная дата:</label>
+          <input type="date" id="end-date">
+        </div>
+      </div>
+    </div>
+    
+    <div class="main-actions">
+      <button id="scan-btn" class="btn primary">
+        <span class="btn-text">Сканировать матчи</span>
+        <div class="loader hidden" id="scan-loader"></div>
+      </button>
+    </div>
+    
+    <div class="main-actions">
+      <button id="clear-btn" class="btn secondary">Очистить список
+      <div class="loader hidden" id="scan-loader"></div>
+      </button>
+    </div>
+    <div class="matches-section">
+      <div class="matches-header">
+        <h3>Найденные матчи</h3>
+        <div class="matches-actions">
+          <button id="select-all" class="btn small secondary">Выбрать все</button>
+          <button id="download-selected" class="btn small primary">
+            <span class="btn-text">Скачать выбранные</span>
+            <div class="loader hidden" id="download-loader"></div>
+          </button>
+        </div>
+      </div>
+      
+      <div class="matches-list-container">
+        <div class="matches-list" id="matches-list">
+          <div class="empty-message">Нет матчей для отображения<br>Укажите даты и нажмите "Сканировать"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Контейнер для уведомлений -->
+  <div id="notifications-container"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

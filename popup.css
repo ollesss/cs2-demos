@@ -1,0 +1,366 @@
+body {
+  width: 420px;
+  padding: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1b2838;
+  color: #e6e6e6;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+h1 {
+  margin: 0 0 10px 0;
+  color: #66c0f4;
+  font-size: 20px;
+  text-align: center;
+}
+
+h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.date-range {
+  background-color: #2a475e;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.date-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.date-inputs div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #3d5a73;
+  border-radius: 3px;
+  background-color: #16202d;
+  color: #e6e6e6;
+  font-family: inherit;
+}
+
+/* Основные кнопки */
+.main-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.clear-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.btn {
+  position: relative;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  height: 40px;
+}
+
+.btn.small {
+  min-width: 100px;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn .btn-text {
+  transition: opacity 0.2s;
+}
+
+.btn.primary {
+  background-color: #5c7e10;
+  color: white;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background-color: #6e9423;
+}
+
+.btn.secondary {
+  background-color: #4a5d6e;
+  color: white;
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background-color: #5b6f82;
+}
+
+/* Секция с матчами */
+.matches-section {
+  background-color: #2a475e;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.matches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.matches-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.matches-list-container {
+  background-color: #1b2838;
+  border-radius: 3px;
+  padding: 5px;
+  min-height: 100px;
+  max-height: 300px;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 290px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.matches-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.matches-list::-webkit-scrollbar-track {
+  background: #1b2838;
+  border-radius: 3px;
+}
+
+.matches-list::-webkit-scrollbar-thumb {
+  background: #4a5d6e;
+  border-radius: 3px;
+}
+
+.matches-list::-webkit-scrollbar-thumb:hover {
+  background: #5b6f82;
+}
+
+/* Элементы матчей */
+.match-item {
+  background-color: #213347;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.match-item:hover {
+  background-color: #263c52;
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.match-date {
+  font-size: 14px;
+  color: #8f98a0;
+}
+
+.match-map {
+  font-weight: bold;
+}
+
+.match-duration {
+  font-size: 12px;
+  color: #8f98a0;
+}
+
+.match-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.match-controls input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.download-btn {
+  background-color: #5c7e10;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.download-btn:hover {
+  background-color: #6e9423;
+}
+
+.empty-message {
+  text-align: center;
+  color: #8f98a0;
+  padding: 20px;
+  font-size: 14px;
+}
+
+/* Статусные сообщения */
+.status {
+  padding: 10px;
+  background-color: #2a475e;
+  border-radius: 5px;
+  font-size: 14px;
+  display: none;
+  transition: all 0.3s ease;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+.status.visible {
+  display: block;
+  opacity: 1;
+  height: auto;
+  margin: 5px 0;
+}
+
+.status.info {
+  color: #66c0f4;
+}
+
+.status.success {
+  color: #a3cf59;
+}
+
+.status.error {
+  color: #e06c6c;
+}
+
+/* Loader styles */
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.loader.visible {
+  opacity: 1;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-loading .btn-text {
+  opacity: 0;
+}
+
+.btn-loading .loader {
+  opacity: 1;
+}
+
+/* Стили для уведомлений */
+#notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+}
+
+.notification {
+  padding: 15px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notification.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification.success {
+  background-color: #5c7e10;
+}
+
+.notification.error {
+  background-color: #e06c6c;
+}
+
+.notification.info {
+  background-color: #4a5d6e;
+}
+
+.notification-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.notification-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 0 0 10px;
+}
