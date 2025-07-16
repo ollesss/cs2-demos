@@ -105,7 +105,6 @@ async function scanMatches(startDate, endDate, callback) {
   // Загружаем дополнительные страницы
   while (continueLoading && !stopDueToModal) {
     if (hasErrorModal()) {
-      console.warn("Обнаружено модальное окно ошибки от Steam. Закрываю и перезагружаю страницу.");
       closeAllErrorModals();
       stopDueToModal = true;
       setTimeout(() => location.reload(), 1000);
