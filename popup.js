@@ -232,27 +232,29 @@ function downloadSelected() {
   }
   
   showNotification(`Начато скачивание ${checkboxes.length} демо...`, 'info');
-  toggleLoader('download', true);
+  toggleLoader('scan', true);
   disableButtons(true);
   
   let downloadedCount = 0;
   const total = checkboxes.length;
+  const urls = Array.from(checkboxes).map(checkbox => checkbox.dataset.url);
   
   const downloadNext = (index) => {
-    if (index >= checkboxes.length) {
-      toggleLoader('download', false);
+    if (index >= urls.length) {
+      toggleLoader('scan', false);
       disableButtons(false);
       showNotification(`Скачано ${downloadedCount} из ${total} демо`, 'success');
       return;
     }
     
-    const checkbox = checkboxes[index];
-    downloadDemo(checkbox.dataset.url, (success) => {
+    downloadDemo(urls[index], (success) => {
       downloadedCount += success ? 1 : 0;
-      downloadNext(index + 1);
+      // Добавляем небольшую задержку между скачиваниями
+      setTimeout(() => downloadNext(index + 1), 500);
     });
   };
   
+  // Начинаем скачивание с первого файла
   downloadNext(0);
 }
 
@@ -272,20 +274,22 @@ function downloadDemo(url, callback) {
 
   // Отправка в background.js
   chrome.runtime.sendMessage(
-  {
-    action: 'download_demo',
-    url: url,
-    filename: filename
-  },
-  (response) => {
-    if (response?.success) {
-      showNotification(`Скачано: ${filename}`, 'success');
-    } else {
-      showNotification(`Ошибка: ${response?.error || 'Неизвестная ошибка'}`, 'error');
-      window.open(url, '_blank');
+    {
+      action: 'download_demo',
+      url: url,
+      filename: filename
+    },
+    (response) => {
+      if (response?.success) {
+        showNotification(`Скачано: ${filename}`, 'success');
+        if (callback) callback(true); // Успешное скачивание
+      } else {
+        showNotification(`Ошибка: ${response?.error || 'Неизвестная ошибка'}`, 'error');
+        window.open(url, '_blank');
+        if (callback) callback(false); // Ошибка скачивания
+      }
     }
-  }
-);
+  );
 }
 
 
