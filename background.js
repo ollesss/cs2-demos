@@ -1,17 +1,13 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'download_demo') {
-    const corsProxy = 'https://cs2-demos.onrender.com/proxy?url=';
-    const proxiedUrl = corsProxy + request.url;
+    const proxyBase = 'https://cs2-demos.onrender.com/proxy';
 
-    fetch(proxiedUrl, {
-      method: 'GET',
-      headers: {
-        'Origin': 'https://example.com' // ⬅️ ОБЯЗАТЕЛЕН
-      }
-    })
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.blob();
+    const proxiedUrl = `${proxyBase}?url=${encodeURIComponent(request.url)}&filename=${encodeURIComponent(request.filename)}`;
+
+    fetch(proxiedUrl)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.blob();
       })
       .then(blob => {
         const blobUrl = URL.createObjectURL(blob);
@@ -37,6 +33,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ success: false, error: err.message });
       });
 
-    return true;
+    return true; // async response
   }
 });
